@@ -1,12 +1,21 @@
 import Home from "./components/routes/home/home.component";
-import Directory from "./components/directory/directory.component";
 import Navigation from "./components/routes/Navigation/navigation.component";
-import { Routes, Route, Outlet } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Authentication from "./components/routes/authentication/authentication.component";
 import Shop from "./components/routes/shop/shop.component";
 import Checkout from "./components/routes/checkout/checkout.component";
 
+import { useEffect } from "react";
+import { getCurrentUser } from "./utils/firebase/firebase.utils";
+import { checkUserSession } from "./store/user/user.action";
+import { useDispatch } from "react-redux";
+
 const App = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(checkUserSession());
+  }, []);
+
   return (
     <Routes>
       <Route path="/" element={<Navigation />}>
